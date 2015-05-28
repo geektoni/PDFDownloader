@@ -110,6 +110,7 @@ public class PDFParser {
             }
             fos.close();
             in.close();
+            status = true;
         } catch(Exception e) {
             System.err.println(e);
         }

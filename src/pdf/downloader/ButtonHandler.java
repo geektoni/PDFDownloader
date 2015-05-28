@@ -40,14 +40,18 @@ public class ButtonHandler implements EventHandler {
                         engine.openPage();
                         engine.setList();
                         int i=0;
-                        for (String elem : engine.getSrcs()) {
+                        for (String elem : engine.getSrcs()) { 
                             if (elem.contains(".pdf")) {
-                                engine.download(engine.checkURL(elem), i);
+                                layout.getMessage().setText("Downloading file "+ elem);
+                                if (engine.download(engine.checkURL(elem), i)) {
+                                    layout.getMessage().setText("File Downloaded");
+                                    layout.getProgress().setProgress(i/engine.getSrcs().size());
+                                }
                                 i++;
                             }
                         }
                     }
-                }   catch (MalformedURLException ex) {
+                } catch (MalformedURLException ex) {
                     Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
            break;
