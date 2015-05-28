@@ -20,24 +20,33 @@ import org.w3c.tidy.Tidy;
  */
 public class PDFParser {
 
-    final static private String PATH = "./ABENI/";
-    
+    private String PATH;
     private FileOutputStream fos;
     private InputStream in;
     private URL url;
     private NodeList list;
     private Document document;
     private Tidy tidy;
-    List<String> srcs = new ArrayList<>();
+    private List<String> srcs = new ArrayList<>();
+
+    public List<String> getSrcs() {
+        return srcs;
+    }
+
+    public PDFParser(String url, String path) throws MalformedURLException {
+        this.url = new URL(url);
+        this.PATH = path;
+        openPage();
+        getList();
+    }
+    
     /**
      * @param args the command line arguments
-     */
+     
     public static void main(String[] args) throws Exception {
-        PDFParser m = new PDFParser();
         String siteUrl = "http://test.com";
         List<String> elements;
             URL page = new URL(siteUrl);
-            m.openPage(page);
             elements = m.getList();
             int i =0;
             for (String s : elements) {
@@ -53,8 +62,8 @@ public class PDFParser {
                 }
             }
     }
-    
-    private void openPage(URL url) {
+    **/
+    private void openPage() {
         tidy = new Tidy();
         tidy.setShowErrors(0);
         tidy.setShowWarnings(false);
@@ -66,20 +75,19 @@ public class PDFParser {
         }
     }
     
-    public List<String>getList() {
+    private void getList() {
         list = document.getElementsByTagName("a");
         for (int i = 0; i < list.getLength(); i++) {
             srcs.add(list.item(i).getAttributes().getNamedItem("href").getNodeValue());
         }
-        return srcs;
     }
     
     private void download(String url, int i) {
         System.out.println("opening connection " + url);
         try {
-        this.url = new URL(url);
-        in = this.url.openStream();
-        fos = new FileOutputStream(new File(PATH+i+"-"+getName(url)));
+            this.url = new URL(url);
+            in = this.url.openStream();
+            fos = new FileOutputStream(new File(PATH+i+"-"+getName(url)));
         } catch (Exception e) {
             System.err.println(e);
         }

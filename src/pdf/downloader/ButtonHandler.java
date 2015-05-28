@@ -8,6 +8,7 @@ package pdf.downloader;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -23,7 +24,12 @@ public class ButtonHandler implements EventHandler {
 
     @Override
     public void handle(Event t) {
-       
+       Button tmp = (Button) t.getSource();
+       switch(tmp.getId()) {
+           case "download":
+              // PDFParser getter = new PDFParser(layout.getSite().getText(), null);
+           break;
+       }
     }
     
 }

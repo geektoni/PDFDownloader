@@ -40,6 +40,10 @@ public class Layout extends Stage {
         return layout;
     }
     
+    public TextField getSite() {
+        return site;
+    }
+    
     private void setLayout() {
         layout = new BorderPane();
         controls = new HBox();
