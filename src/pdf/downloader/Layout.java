@@ -10,9 +10,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -57,6 +57,8 @@ public class Layout extends Stage {
     
     private void setButtons() {
         download = new Button("Download");
+        download.setId("download");
+        download.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
     }
     
     private void setBox(HBox h) {
