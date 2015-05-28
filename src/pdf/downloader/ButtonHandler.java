@@ -39,6 +39,13 @@ public class ButtonHandler implements EventHandler {
                     if (!engine.checkConfig()) {
                         engine.openPage();
                         engine.setList();
+                        int i=0;
+                        for (String elem : engine.getSrcs()) {
+                            if (elem.contains(".pdf")) {
+                                engine.download(engine.checkURL(elem), i);
+                                i++;
+                            }
+                        }
                     }
                 }   catch (MalformedURLException ex) {
                     Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);

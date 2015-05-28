@@ -51,6 +51,14 @@ public class Layout extends Stage {
         return site;
     }
     
+    public Text getMessage() {
+        return message;
+    }
+
+    public ProgressBar getProgress() {
+        return progress;
+    }
+    
     private void setLayout() {
         layout = new BorderPane();
         controls = new HBox();

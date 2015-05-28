@@ -49,9 +49,7 @@ public class PDFParser {
             int i =0;
             for (String s : elements) {
                 if (s.contains(".pdf")) {
-                    if (!s.contains(siteUrl)) {
-                        String url = siteUrl;
-                        m.download(url.concat(s), i);
+                   
                         i++; 
                     } else {
                         m.download(s, i);
@@ -93,7 +91,8 @@ public class PDFParser {
         }
     }
     
-    private void download(String url, int i) {
+    public boolean download(String url, int i) {
+        boolean status= false;
         System.out.println("opening connection " + url);
         try {
             this.url = new URL(url);
@@ -114,12 +113,22 @@ public class PDFParser {
         } catch(Exception e) {
             System.err.println(e);
         }
-        
-        System.out.println("file was downloaded");
+        return status;
     }
     
     private String getName(String name) {
         return name.substring(name.lastIndexOf("/")+1);
+    }
+    
+    public String checkURL(String url) {
+         String result = null;
+         if (!url.contains(this.url.toString())) {
+            String urltmp = this.url.toString();
+            result = urltmp.concat(url); 
+         } else {
+             result = url;
+         }
+         return result;
     }
     
 }
