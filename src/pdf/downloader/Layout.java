@@ -9,10 +9,13 @@ package pdf.downloader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -26,10 +29,14 @@ public class Layout extends Stage {
     
     private BorderPane layout;
     private HBox controls;
+    private VBox board;
     private Button download, path;
+    private Text message;
+    private ProgressBar progress;
     private TextField site;
 
     public Layout() {
+        setBar();
         setButtons();
         setTextField();
         setLayout();
@@ -47,11 +54,17 @@ public class Layout extends Stage {
     private void setLayout() {
         layout = new BorderPane();
         controls = new HBox();
+        board = new VBox();
+        message = new Text("Fill the above form");
         
         controls.getChildren().addAll(site,path,download);
         setBox(controls);
         
+        board.getChildren().addAll(message, progress);
+        setBox(board);
+        
         layout.setTop(controls);
+        layout.setCenter(board);
         
     }
     
@@ -74,5 +87,15 @@ public class Layout extends Stage {
         h.setPadding(PADDING);
     }
     
+    private void setBox(VBox h) {
+        h.setAlignment(Pos.CENTER);
+        h.setSpacing(SPACING);
+        h.setPadding(PADDING);
+    }
+    
+    private void setBar() {
+        progress = new ProgressBar(0.0);
+        progress.setMinSize(20, 10);
+    }
     
 }
