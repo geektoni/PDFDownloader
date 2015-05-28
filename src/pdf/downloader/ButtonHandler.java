@@ -9,6 +9,7 @@ package pdf.downloader;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.stage.DirectoryChooser;
 
 /**
  *
@@ -17,9 +18,11 @@ import javafx.scene.control.Button;
 public class ButtonHandler implements EventHandler {
 
     private Layout layout;
+    private PDFParser engine;
     
     public ButtonHandler(Layout layout) {
         this.layout = layout;
+        engine = new PDFParser();
     }
 
     @Override
@@ -28,6 +31,11 @@ public class ButtonHandler implements EventHandler {
        switch(tmp.getId()) {
            case "download":
               // PDFParser getter = new PDFParser(layout.getSite().getText(), null);
+           break;
+           case "path":
+               DirectoryChooser dir = new DirectoryChooser();
+               dir.setTitle("Choose a directory");
+               engine.setPATH(dir.showDialog(layout).getAbsolutePath()); 
            break;
        }
     }

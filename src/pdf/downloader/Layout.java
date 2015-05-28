@@ -26,7 +26,7 @@ public class Layout extends Stage {
     
     private BorderPane layout;
     private HBox controls;
-    private Button download;
+    private Button download, path;
     private TextField site;
 
     public Layout() {
@@ -48,7 +48,7 @@ public class Layout extends Stage {
         layout = new BorderPane();
         controls = new HBox();
         
-        controls.getChildren().addAll(site, download);
+        controls.getChildren().addAll(site,path,download);
         setBox(controls);
         
         layout.setTop(controls);
@@ -63,6 +63,9 @@ public class Layout extends Stage {
         download = new Button("Download");
         download.setId("download");
         download.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
+        path = new Button("Chose a location...");
+        path.setId("path");
+        path.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
     }
     
     private void setBox(HBox h) {

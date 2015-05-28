@@ -33,11 +33,7 @@ public class PDFParser {
         return srcs;
     }
 
-    public PDFParser(String url, String path) throws MalformedURLException {
-        this.url = new URL(url);
-        this.PATH = path;
-        openPage();
-        getList();
+    public PDFParser() {
     }
     
     /**
@@ -63,6 +59,11 @@ public class PDFParser {
             }
     }
     **/
+    
+    public void setPATH(String PATH) {
+        this.PATH = PATH;
+    }
+    
     private void openPage() {
         tidy = new Tidy();
         tidy.setShowErrors(0);
