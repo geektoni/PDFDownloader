@@ -34,6 +34,8 @@ public class PDFParser {
     }
 
     public PDFParser() {
+        PATH = null;
+        url = null;
     }
     
     /**
@@ -60,11 +62,19 @@ public class PDFParser {
     }
     **/
     
+    public boolean checkConfig() {
+        return (url == null || PATH == null);
+    }
+    
     public void setPATH(String PATH) {
         this.PATH = PATH;
     }
     
-    private void openPage() {
+    public void setUrl(URL url) {
+        this.url = url;
+    }
+    
+    public void openPage() {
         tidy = new Tidy();
         tidy.setShowErrors(0);
         tidy.setShowWarnings(false);
@@ -76,7 +86,7 @@ public class PDFParser {
         }
     }
     
-    private void getList() {
+    public void setList() {
         list = document.getElementsByTagName("a");
         for (int i = 0; i < list.getLength(); i++) {
             srcs.add(list.item(i).getAttributes().getNamedItem("href").getNodeValue());

@@ -6,6 +6,10 @@
  */
 package pdf.downloader;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,8 +33,16 @@ public class ButtonHandler implements EventHandler {
     public void handle(Event t) {
        Button tmp = (Button) t.getSource();
        switch(tmp.getId()) {
-           case "download":
-              // PDFParser getter = new PDFParser(layout.getSite().getText(), null);
+            case "download":
+                try {
+                    engine.setUrl(new URL(layout.getSite().getText()));
+                    if (!engine.checkConfig()) {
+                        engine.openPage();
+                        engine.setList();
+                    }
+                }   catch (MalformedURLException ex) {
+                    Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
            break;
            case "path":
                DirectoryChooser dir = new DirectoryChooser();
