@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,28 +37,6 @@ public class PDFParser {
         url = null;
     }
     
-    /**
-     * @param args the command line arguments
-     
-    public static void main(String[] args) throws Exception {
-        String siteUrl = "http://test.com";
-        List<String> elements;
-            URL page = new URL(siteUrl);
-            elements = m.getList();
-            int i =0;
-            for (String s : elements) {
-                if (s.contains(".pdf")) {
-                   
-                        i++; 
-                    } else {
-                        m.download(s, i);
-                        i++;
-                    }
-                }
-            }
-    }
-    **/
-    
     public boolean checkConfig() {
         return (url == null || PATH == null);
     }
@@ -87,7 +64,10 @@ public class PDFParser {
     public void setList() {
         list = document.getElementsByTagName("a");
         for (int i = 0; i < list.getLength(); i++) {
-            srcs.add(list.item(i).getAttributes().getNamedItem("href").getNodeValue());
+            String url = list.item(i).getAttributes().getNamedItem("href").getNodeValue();
+            if (checkContainsFile(url)) {
+                srcs.add(url);
+            }
         }
     }
     
@@ -132,4 +112,11 @@ public class PDFParser {
          return result;
     }
     
+    public boolean checkContainsFile(String url) {
+        boolean status = false;
+        if (url.contains(".pdf")) {
+            status = true;
+        }
+        return status;
+    }
 }

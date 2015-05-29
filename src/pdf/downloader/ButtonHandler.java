@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 
 /**
@@ -36,21 +38,22 @@ public class ButtonHandler implements EventHandler {
             case "download":
                 try {
                     engine.setUrl(new URL(layout.getSite().getText()));
-                    if (!engine.checkConfig()) {
-                        engine.openPage();
-                        engine.setList();
-                        int i=0;
+                    //if (!engine.checkConfig()) {
+                       engine.openPage();
+                       engine.setList();
+                       layout.setProgressList(engine.getSrcs());
+                       int i=0;
                         for (String elem : engine.getSrcs()) { 
-                            if (elem.contains(".pdf")) {
-                                layout.getMessage().setText("Downloading file "+ elem);
-                                if (engine.download(engine.checkURL(elem), i)) {
-                                    layout.getMessage().setText("File Downloaded");
-                                    layout.getProgress().setProgress(i/engine.getSrcs().size());
+                            if (engine.checkContainsFile(elem)) {
+                                if (engine.download(elem, i)) {
+                                    HBox tmpBox = (HBox)layout.getProgressList().getItems().get(i).getChildren().get(1);
+                                    ((ProgressBar)tmpBox.getChildren().get(0)).setProgress(1);
                                 }
                                 i++;
                             }
                         }
-                    }
+                               
+                   //}
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -58,7 +61,8 @@ public class ButtonHandler implements EventHandler {
            case "path":
                DirectoryChooser dir = new DirectoryChooser();
                dir.setTitle("Choose a directory");
-               engine.setPATH(dir.showDialog(layout).getAbsolutePath()); 
+               engine.setPATH(dir.showDialog(layout).getAbsolutePath());
+               
            break;
        }
     }

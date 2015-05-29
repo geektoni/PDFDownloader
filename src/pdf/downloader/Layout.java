@@ -6,9 +6,13 @@
  */
 package pdf.downloader;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -34,15 +38,16 @@ public class Layout extends Stage {
     private Text message;
     private ProgressBar progress;
     private TextField site;
+    private ListView<HBox> progressList;
 
     public Layout() {
+        setList();
         setBar();
         setButtons();
         setTextField();
         setLayout();
     }
-    
-    
+ 
     public BorderPane getLayout() {
         return layout;
     }
@@ -59,6 +64,29 @@ public class Layout extends Stage {
         return progress;
     }
     
+    public ListView<HBox> getProgressList() {
+        return progressList;
+    }
+
+    
+    public void setProgressList(List<String> l) {
+        List<HBox> listTmp = new ArrayList<HBox>();
+        for (String elem : l) {
+            HBox container = new HBox();
+            HBox tmp = new HBox();
+            HBox tmp2 = new HBox();
+            ProgressBar tmp3 = new ProgressBar(0.0);
+            tmp.getChildren().addAll(new Text(elem));
+            tmp2.getChildren().add(tmp3);
+            tmp2.setAlignment(Pos.CENTER_RIGHT);
+            container.getChildren().addAll(tmp, tmp2);
+            container.setSpacing(SPACING);
+            container.setAlignment(Pos.CENTER);
+            listTmp.add(container);
+        }
+        progressList.setItems(FXCollections.observableList(listTmp));
+    }
+    
     private void setLayout() {
         layout = new BorderPane();
         controls = new HBox();
@@ -72,7 +100,7 @@ public class Layout extends Stage {
         setBox(board);
         
         layout.setTop(controls);
-        layout.setCenter(board);
+        layout.setCenter(progressList);
         
     }
     
@@ -84,6 +112,7 @@ public class Layout extends Stage {
         download = new Button("Download");
         download.setId("download");
         download.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
+       
         path = new Button("Chose a location...");
         path.setId("path");
         path.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
@@ -106,4 +135,8 @@ public class Layout extends Stage {
         progress.setMinSize(20, 10);
     }
     
+    private void setList() {
+       progressList = new ListView<>();
+       progressList.setEditable(false);
+    }
 }
