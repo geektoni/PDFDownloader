@@ -108,6 +108,7 @@ public class Layout extends Stage {
         layout.setCenter(progressList);
         layout.setBottom(download);
         BorderPane.setAlignment(download, Pos.CENTER);
+        BorderPane.setMargin(progressList, PADDING);
         layout.setPadding(PADDING);
         
     }
@@ -129,6 +130,7 @@ public class Layout extends Stage {
         
         download = new Button("Download");
         download.setId("download");
+        download.setMinSize(30, 40);
         download.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
         download.setDisable(true);
     }
