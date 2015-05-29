@@ -68,9 +68,9 @@ public class PDFParser {
     public void setList() {
         list = document.getElementsByTagName("a");
         for (int i = 0; i < list.getLength(); i++) {
-            String url = list.item(i).getAttributes().getNamedItem("href").getNodeValue();
-            if (checkContainsFile(url)) {
-                srcs.add(url);
+            String urlTmp = list.item(i).getAttributes().getNamedItem("href").getNodeValue();
+            if (checkContainsFile(urlTmp)) {
+                srcs.add(urlTmp);
             }
         }
     }

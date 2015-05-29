@@ -34,7 +34,7 @@ public class Layout extends Stage {
     private BorderPane layout;
     private HBox controls;
     private VBox board;
-    private Button download, path;
+    private Button download, path, search;
     private Text message;
     private ProgressBar progress;
     private TextField site;
@@ -48,6 +48,11 @@ public class Layout extends Stage {
         setLayout();
     }
  
+    
+    public Button getDownload() {
+        return download;
+    }
+    
     public BorderPane getLayout() {
         return layout;
     }
@@ -65,7 +70,7 @@ public class Layout extends Stage {
     }
     
     public ListView<HBox> getProgressList() {
-        return progressList;
+        return progressList; 
     }
 
     
@@ -93,7 +98,7 @@ public class Layout extends Stage {
         board = new VBox();
         message = new Text("Fill the above form");
         
-        controls.getChildren().addAll(site,path,download);
+        controls.getChildren().addAll(site,path,search);
         setBox(controls);
         
         board.getChildren().addAll(message, progress);
@@ -101,6 +106,9 @@ public class Layout extends Stage {
         
         layout.setTop(controls);
         layout.setCenter(progressList);
+        layout.setBottom(download);
+        BorderPane.setAlignment(download, Pos.CENTER);
+        layout.setPadding(PADDING);
         
     }
     
@@ -111,13 +119,18 @@ public class Layout extends Stage {
     private void setButtons() {
         ButtonHandler listener = new ButtonHandler(this);
         
-        download = new Button("Download");
-        download.setId("download");
-        download.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
+        search = new Button("Search");
+        search.setId("search");
+        search.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
        
         path = new Button("Chose a location...");
         path.setId("path");
         path.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
+        
+        download = new Button("Download");
+        download.setId("download");
+        download.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
+        download.setDisable(true);
     }
     
     private void setBox(HBox h) {

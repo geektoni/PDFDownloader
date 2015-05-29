@@ -42,8 +42,9 @@ public class ButtonHandler implements EventHandler {
                        engine.openPage();
                        engine.setList();
                        layout.setProgressList(engine.getSrcs());
+                       Thread.sleep(1000);
                        int i=0;
-                        for (String elem : engine.getSrcs()) { 
+                       for (String elem : engine.getSrcs()) { 
                             if (engine.checkContainsFile(elem)) {
                                 if (engine.download(elem, i)) {
                                     HBox tmpBox = (HBox)layout.getProgressList().getItems().get(i).getChildren().get(1);
@@ -56,12 +57,28 @@ public class ButtonHandler implements EventHandler {
                    }
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
+                } 
            break;
            case "path":
                DirectoryChooser dir = new DirectoryChooser();
                dir.setTitle("Choose a directory");
                engine.setPATH(dir.showDialog(layout).getPath());
+           break;
+               
+           case "search":
+               try {
+                    engine.setUrl(new URL(layout.getSite().getText()));
+                    if (!engine.checkConfig()) {
+                       engine.openPage();
+                       engine.setList();
+                       layout.setProgressList(engine.getSrcs());
+                       layout.getDownload().setDisable(false);
+                    }
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
            break;
        }
     }
