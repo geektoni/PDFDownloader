@@ -109,13 +109,15 @@ public class Layout extends Stage {
     }
     
     private void setButtons() {
+        ButtonHandler listener = new ButtonHandler(this);
+        
         download = new Button("Download");
         download.setId("download");
-        download.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
+        download.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
        
         path = new Button("Chose a location...");
         path.setId("path");
-        path.addEventHandler(MouseEvent.MOUSE_CLICKED, new ButtonHandler(this));
+        path.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
     }
     
     private void setBox(HBox h) {

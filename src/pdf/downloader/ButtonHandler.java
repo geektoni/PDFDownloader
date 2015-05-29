@@ -38,7 +38,7 @@ public class ButtonHandler implements EventHandler {
             case "download":
                 try {
                     engine.setUrl(new URL(layout.getSite().getText()));
-                    //if (!engine.checkConfig()) {
+                    if (!engine.checkConfig()) {
                        engine.openPage();
                        engine.setList();
                        layout.setProgressList(engine.getSrcs());
@@ -53,7 +53,7 @@ public class ButtonHandler implements EventHandler {
                             }
                         }
                                
-                   //}
+                   }
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -61,8 +61,7 @@ public class ButtonHandler implements EventHandler {
            case "path":
                DirectoryChooser dir = new DirectoryChooser();
                dir.setTitle("Choose a directory");
-               engine.setPATH(dir.showDialog(layout).getAbsolutePath());
-               
+               engine.setPATH(dir.showDialog(layout).getPath());
            break;
        }
     }

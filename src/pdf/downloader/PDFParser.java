@@ -45,6 +45,10 @@ public class PDFParser {
         this.PATH = PATH;
     }
     
+    public String getPath() {
+        return PATH;
+    }
+    
     public void setUrl(URL url) {
         this.url = url;
     }
@@ -77,7 +81,7 @@ public class PDFParser {
         try {
             this.url = new URL(url);
             in = this.url.openStream();
-            fos = new FileOutputStream(new File(PATH+i+"-"+getName(url)));
+            fos = new FileOutputStream(new File(PATH+"/"+i+"-"+getName(url)));
         } catch (Exception e) {
             System.err.println(e);
         }
