@@ -86,7 +86,7 @@ public class Layout extends Stage {
             tmp2.setAlignment(Pos.CENTER_RIGHT);
             container.getChildren().addAll(tmp, tmp2);
             container.setSpacing(SPACING);
-            container.setAlignment(Pos.CENTER);
+            container.setAlignment(Pos.CENTER_LEFT);
             listTmp.add(container);
         }
         progressList.setItems(FXCollections.observableList(listTmp));
