@@ -44,7 +44,7 @@ public class ButtonHandler implements EventHandler {
                             if (engine.checkContainsFile(elem)) {
                                 if (engine.download(elem, i)) {
                                     HBox tmpBox = (HBox)layout.getProgressList().getItems().get(i).getChildren().get(1);
-                                    ((ProgressBar)tmpBox.getChildren().get(0)).setProgress(1);
+                                    ((ProgressBar)tmpBox.getChildren().get(0)).setProgress(i);
                                 }
                                 i++;
                             }

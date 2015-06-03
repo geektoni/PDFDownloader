@@ -89,7 +89,7 @@ public class PDFParser {
         for (int i = 0; i < list.getLength(); i++) {
             String urlTmp = list.item(i).getAttributes().getNamedItem("href").getNodeValue();
             if (checkContainsFile(urlTmp)) {
-                srcs.add(urlTmp);
+                srcs.add(checkURL(urlTmp));
             }
         }
     }
@@ -102,6 +102,7 @@ public class PDFParser {
      * @return true if everything worked
      */
     public boolean download(String url, int i) {
+        System.out.println(url);
         boolean status= false;
         try {
             this.url = new URL(url);
