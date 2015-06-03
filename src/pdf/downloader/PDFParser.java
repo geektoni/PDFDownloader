@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
 /**
- *
+ * Class that parse the HTML page to find links to pdf files.
  * @author Giovanni De Toni
  */
 public class PDFParser {
@@ -26,21 +26,27 @@ public class PDFParser {
     private NodeList list;
     private Document document;
     private Tidy tidy;
-    private List<String> srcs = new ArrayList<>();
+    private List<String> srcs;
 
-    public List<String> getSrcs() {
-        return srcs;
-    }
-
+    /**
+     * Constructor, set PATH and url variables to null.
+     */
     public PDFParser() {
         PATH = null;
         url = null;
     }
     
+    /**
+     * Method that check if url and PATH are specified (not null).
+     * @return true whether path ore url are not specified. 
+     */
     public boolean checkConfig() {
         return (url == null || PATH == null);
     }
     
+    /*
+    * Some getter and setter of private variables.
+    */
     public void setPATH(String PATH) {
         this.PATH = PATH;
     }
@@ -53,6 +59,14 @@ public class PDFParser {
         this.url = url;
     }
     
+    public List<String> getSrcs() {
+        return srcs;
+    }
+
+    /**
+     * Method that open the page and populate
+     * document variable using JTidy.
+     */
     public void openPage() {
         tidy = new Tidy();
         tidy.setShowErrors(0);
@@ -65,7 +79,12 @@ public class PDFParser {
         }
     }
     
+    /**
+     * Method that generate a new list of every href occurrencies,
+     * but only if they contain .pdf.
+     */
     public void setList() {
+        srcs = new ArrayList<>();
         list = document.getElementsByTagName("a");
         for (int i = 0; i < list.getLength(); i++) {
             String urlTmp = list.item(i).getAttributes().getNamedItem("href").getNodeValue();
@@ -75,9 +94,15 @@ public class PDFParser {
         }
     }
     
+    /**
+     * Method that download a file, given an url and
+     * an integer.
+     * @param url string that identifies the file
+     * @param i counter
+     * @return true if everything worked
+     */
     public boolean download(String url, int i) {
         boolean status= false;
-        System.out.println("opening connection " + url);
         try {
             this.url = new URL(url);
             in = this.url.openStream();
@@ -85,9 +110,8 @@ public class PDFParser {
         } catch (Exception e) {
             System.err.println(e);
         }
-        System.out.println("reading file...");
         int length = -1;
-        byte[] buffer = new byte[1024];// buffer for portion of data from connection
+        byte[] buffer = new byte[1024];
         try {
             while ((length = in.read(buffer)) > -1) {
                 fos.write(buffer, 0, length);
@@ -101,10 +125,21 @@ public class PDFParser {
         return status;
     }
     
+    /**
+     * Method that return the name of a specified file
+     * @param name url of that file
+     * @return string representing the filename
+     */
     private String getName(String name) {
         return name.substring(name.lastIndexOf("/")+1);
     }
     
+    /**
+     * Method that check if url passed is not relative and
+     * if it is it will convert it to and absolute one.
+     * @param url file url (relative or not).
+     * @return absolute file url
+     */
     public String checkURL(String url) {
          String result = null;
          if (!url.contains(this.url.toString())) {
@@ -116,6 +151,11 @@ public class PDFParser {
          return result;
     }
     
+    /**
+     * Method that check if an url contains .pdf or not
+     * @param url file url
+     * @return true if it contains .pdf, false otherwise. 
+     */
     public boolean checkContainsFile(String url) {
         boolean status = false;
         if (url.contains(".pdf")) {
