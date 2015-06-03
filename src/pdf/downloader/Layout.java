@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -115,6 +116,7 @@ public class Layout extends Stage {
     
     private void setTextField() {
         site = new TextField();
+        site.setTooltip(new Tooltip("Insert here the page url"));
     }
     
     private void setButtons() {
