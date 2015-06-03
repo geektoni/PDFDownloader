@@ -59,6 +59,7 @@ public class ButtonHandler implements EventHandler {
                DirectoryChooser dir = new DirectoryChooser();
                dir.setTitle("Choose a directory");
                engine.setPATH(dir.showDialog(layout).getPath());
+               tmp.setText(engine.getPath());
            break;
                
            case "search":

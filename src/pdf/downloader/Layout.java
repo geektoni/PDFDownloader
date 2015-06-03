@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -116,7 +117,8 @@ public class Layout extends Stage {
     
     private void setTextField() {
         site = new TextField();
-        site.setTooltip(new Tooltip("Insert here the page url"));
+        Tooltip tmp = new Tooltip("Insert here the page url");
+        site.setTooltip(tmp);
     }
     
     private void setButtons() {
@@ -126,7 +128,9 @@ public class Layout extends Stage {
         search.setId("search");
         search.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
        
-        path = new Button("Chose a location...");
+        path = new Button("Chose a location");
+        path.setMaxWidth(130);
+        path.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
         path.setId("path");
         path.addEventHandler(MouseEvent.MOUSE_CLICKED, listener);
         
