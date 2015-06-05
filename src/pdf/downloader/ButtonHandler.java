@@ -36,15 +36,16 @@ public class ButtonHandler implements EventHandler {
        Button tmp = (Button) t.getSource();
        switch(tmp.getId()) {
             case "download":
+                boolean status = true;
                 try {
                     engine.setUrl(new URL(layout.getSite().getText()));
                     if (!engine.checkConfig()) {
                        int i=0;
                        for (String elem : engine.getSrcs()) {
                             if (engine.checkContainsFile(elem)) {
-                                if (engine.download(elem, i)) {
-                                    HBox tmpBox = (HBox)layout.getProgressList().getItems().get(i).getChildren().get(1);
-                                    ((ProgressBar)tmpBox.getChildren().get(0)).setProgress(i);
+                                layout.getProgress().setProgress(i/5);
+                                if (!engine.download(elem, i)) {
+                                    status = false; 
                                 }
                                 i++;
                             }
@@ -70,6 +71,7 @@ public class ButtonHandler implements EventHandler {
                        engine.setList();
                        layout.setProgressList(engine.getSrcs());
                        layout.getDownload().setDisable(false);
+                       layout.getNumberFiles().setText(layout.getNumberFiles().getText() + engine.getSrcs().size());
                     }
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(ButtonHandler.class.getName()).log(Level.SEVERE, null, ex);

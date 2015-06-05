@@ -37,7 +37,7 @@ public class Layout extends Stage {
     private HBox controls;
     private VBox board;
     private Button download, path, search;
-    private Text message;
+    private Text message, numberFiles;
     private ProgressBar progress;
     private TextField site;
     private ListView<HBox> progressList;
@@ -50,6 +50,10 @@ public class Layout extends Stage {
         setLayout();
     }
  
+    
+    public Text getNumberFiles() {
+        return numberFiles;
+    }
     
     public Button getDownload() {
         return download;
@@ -82,9 +86,7 @@ public class Layout extends Stage {
             HBox container = new HBox();
             HBox tmp = new HBox();
             HBox tmp2 = new HBox();
-            ProgressBar tmp3 = new ProgressBar(0.0);
             tmp.getChildren().addAll(new Text(elem));
-            tmp2.getChildren().add(tmp3);
             tmp2.setAlignment(Pos.CENTER_RIGHT);
             container.getChildren().addAll(tmp, tmp2);
             container.setSpacing(SPACING);
@@ -100,13 +102,21 @@ public class Layout extends Stage {
         board = new VBox();
         message = new Text("Fill the above form");
         
+        numberFiles = new Text("Number of file: ");
+        
         controls.getChildren().addAll(site,path,search);
         setBox(controls);
         
-        board.getChildren().addAll(message, progress);
+        HBox tmpBox = new HBox();
+        tmpBox.getChildren().add(progress);
+        tmpBox.getChildren().add(numberFiles);
+        tmpBox.setSpacing(SPACING);
+        tmpBox.setAlignment(Pos.CENTER);
+        
+        board.getChildren().addAll(controls, tmpBox);
         setBox(board);
         
-        layout.setTop(controls);
+        layout.setTop(board);
         layout.setCenter(progressList);
         layout.setBottom(download);
         BorderPane.setAlignment(download, Pos.CENTER);
@@ -144,7 +154,7 @@ public class Layout extends Stage {
     private void setBox(HBox h) {
         h.setAlignment(Pos.CENTER);
         h.setSpacing(SPACING);
-        h.setPadding(PADDING);
+        //h.setPadding(PADDING);
     }
     
     private void setBox(VBox h) {
