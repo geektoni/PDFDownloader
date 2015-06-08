@@ -6,8 +6,11 @@
  */
 package pdf.downloader;
 
+import java.io.IOException;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -19,10 +22,10 @@ public class Main extends Application {
     final static public String TITLE = "PDFDownloader";
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         
-        Layout root = new Layout();    
-        Scene scene = new Scene(root.getLayout());
+        BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("fxml_layout.fxml"));    
+        Scene scene = new Scene(root);
         
         primaryStage.setTitle(Main.TITLE);
         primaryStage.setScene(scene);
