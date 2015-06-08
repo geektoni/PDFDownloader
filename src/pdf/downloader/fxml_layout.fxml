@@ -16,7 +16,18 @@
             <padding><Insets bottom="10" top="10" left="10" right="10" /></padding> 
             <TextField prefWidth="150" />  
             <Button fx:id="search" text="Search" /> 
-            <Button fx:id="download" text="Downaload" />    
+            <Button fx:id="path" text="Choose a location" />    
         </HBox>
     </top>
+    <center>
+        <VBox alignment="CENTER"  >
+            <padding><Insets bottom="10" top="10" left="10" right="10" /></padding>
+            <ListView /> 
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" >
+            <Button fx:id="download" text="Download" disable="true" />
+        </HBox>
+    </bottom>
 </BorderPane>   
